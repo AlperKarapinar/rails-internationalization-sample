@@ -1,0 +1,1 @@
+== Rails, timezone from GeoIP, locale from request header or parameter sample
