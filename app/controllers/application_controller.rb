@@ -17,4 +17,9 @@ private
     request.env['HTTP_ACCEPT_LANGUAGE'].scan(/^[en|tr]{2}/).first || I18n.default_locale
   end
   
+  def default_url_options(options={})  
+    set_locale_from_url
+    { :locale => I18n.locale }
+  end
+  
 end

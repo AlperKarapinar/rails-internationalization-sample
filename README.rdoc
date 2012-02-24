@@ -14,7 +14,7 @@ First, look if params exists (user may require any different locale, for any tim
     I18n.locale = params[:locale] || current_user.try(:locale) || extract_locale_from_accept_language_header
     private
     def extract_locale_from_accept_language_header
-    	request.env['HTTP_ACCEPT_LANGUAGE'].scan(/^[en|tr]{2}/).first || I18n.default_locale
+      request.env['HTTP_ACCEPT_LANGUAGE'].scan(/^[en|tr]{2}/).first || I18n.default_locale
     end
 
 == Locale scope in routes
@@ -22,4 +22,13 @@ First, look if params exists (user may require any different locale, for any tim
 Dynamic scope for locales
 
     scope "(:locale)", :locale => /en|tr/ do
+      devise_for :users
+      root :to => "main#index"
+    end
+
+Set locale parameter if it exists in url
+
+    def default_url_options(options={})  
+      set_locale_from_url
+      { :locale => I18n.locale }
     end
