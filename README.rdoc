@@ -4,5 +4,9 @@
 
 Used geoip gem, with GeoLite Country. ip => country, country => timezone(s). This is done only once when user is registrating for the first time. So, assuming GeoIP.dat file is under /lib/data, inside devise registration form:
 
-	<% country = GeoIP.new(Rails.root.join('lib','data','GeoIP.dat')).country(request.remote_ip) %>
-	<%= f.time_zone_select :time_zone, (country.ip == "127.0.0.1") ? nil : TZInfo::Country.get(country.country_code2).zones %>
+    <% country = GeoIP.new(Rails.root.join('lib','data','GeoIP.dat')).country(request.remote_ip) %>
+    <%= f.time_zone_select :time_zone, (country.ip == "127.0.0.1") ? nil : TZInfo::Country.get(country.country_code2).zones %>
+
+== Localization
+
+First, look if params exists (user may require any different locale, for any time, for any reason), next, check if current_user exists, if so, use its settings, if its public user, that try to guess from browser header, and finally set locale from default locale.
