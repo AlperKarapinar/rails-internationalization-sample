@@ -1,1 +1,8 @@
-== Rails, timezone from GeoIP, locale from request header or parameter sample
+= Rails, timezone from GeoIP, locale from request header or parameter sample
+
+== Guessing timezone from ip
+
+Used geoip gem, with GeoLite Country. ip => country, country => timezone(s). This is done only once when user is registrating for the first time. So, assuming GeoIP.dat file is under /lib/data, inside devise registration form:
+
+	<% country = GeoIP.new(Rails.root.join('lib','data','GeoIP.dat')).country(request.remote_ip) %>
+	<%= f.time_zone_select :time_zone, (country.ip == "127.0.0.1") ? nil : TZInfo::Country.get(country.country_code2).zones %>
