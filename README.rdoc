@@ -10,3 +10,16 @@ Used geoip gem, with GeoLite Country. ip => country, country => timezone(s). Thi
 == Localization
 
 First, look if params exists (user may require any different locale, for any time, for any reason), next, check if current_user exists, if so, use its settings, if its public user, that try to guess from browser header, and finally set locale from default locale.
+
+    I18n.locale = params[:locale] || current_user.try(:locale) || extract_locale_from_accept_language_header
+    private
+    def extract_locale_from_accept_language_header
+    	request.env['HTTP_ACCEPT_LANGUAGE'].scan(/^[en|tr]{2}/).first || I18n.default_locale
+    end
+
+== Locale scope in routes
+
+Dynamic scope for locales
+
+    scope "(:locale)", :locale => /en|tr/ do
+    end
