@@ -32,3 +32,7 @@ Set locale parameter if it exists in url
       set_locale_from_url
       { :locale => I18n.locale }
     end
+
+
+
+Update me!
